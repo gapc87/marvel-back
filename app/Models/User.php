@@ -12,6 +12,18 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public static function boot() {
+	    parent::boot();
+        static::created(function ($user) {
+            $team = Team::create([
+                'name' => $user->name . '\'s Team'
+            ]);
+
+            $user->team_id = $team->id;
+            $user->save();
+	    });
+	}
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +33,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'team_id'
     ];
 
     /**
