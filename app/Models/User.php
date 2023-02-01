@@ -58,10 +58,10 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Un usuario sólo tiene un equipo
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function team() {
-        return $this->hasOne(Team::class);
+        return $this->belongsTo(Team::class);
     }
 
     /**

@@ -24,4 +24,8 @@ class Team extends Model
         'hero_5',
         'hero_6',
     ];
+
+    function user() {
+        return $this->hasOne(User::class);
+    }
 }
