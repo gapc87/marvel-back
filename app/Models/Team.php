@@ -28,4 +28,15 @@ class Team extends Model
     function user() {
         return $this->hasOne(User::class);
     }
+
+    function emptyRows() {
+        $this->hero_1 = null;
+        $this->hero_2 = null;
+        $this->hero_3 = null;
+        $this->hero_4 = null;
+        $this->hero_5 = null;
+        $this->hero_6 = null;
+
+        $this->save();
+    }
 }
