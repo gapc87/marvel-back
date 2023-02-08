@@ -17,7 +17,7 @@ class TeamController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
-        $this->authorizeResource(Team::class, 'team');
+        //$this->authorizeResource(Team::class, 'team');
     }
 
     /**
@@ -40,17 +40,10 @@ class TeamController extends Controller
      * @param  \App\Models\Team  $team
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request): JsonResponse
+    public function update(Request $request, string $field): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'name'        => 'sometimes|required|text',
-            'description' => 'sometimes|required|text',
-            'heroe_1'      => 'sometimes|required|numeric',
-            'heroe_2'      => 'sometimes|required|numeric',
-            'heroe_3'      => 'sometimes|required|numeric',
-            'heroe_4'      => 'sometimes|required|numeric',
-            'heroe_5'      => 'sometimes|required|numeric',
-            'heroe_6'      => 'sometimes|required|numeric',
+        $validator = Validator::make($request['team'], [
+            $field => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -61,7 +54,7 @@ class TeamController extends Controller
         $team->fill($validator->validated());
 
         return response()->json([
-            'team' => $team
+            'team' => $team->$field
         ]);
     }
 

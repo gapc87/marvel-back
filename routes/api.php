@@ -15,6 +15,8 @@ use App\Http\Controllers\TeamController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::put('/team/{field}', [TeamController::class, 'update']);
+
 Route::get('marvel-hash', MarvelController::class);
 
 Route::post('auth/login', [AuthController::class, 'login']);
@@ -31,6 +33,7 @@ Route::group([
 Route::group([
     'middleware' => 'api',
 ], function ($router) {
-    Route::resource('/team', TeamController::class)->only('index', 'update', 'destroy');
+    Route::resource('/team', TeamController::class)->only('index', 'destroy');
     Route::post('/team/hero', [TeamController::class, 'getHero']);
+    
 });

@@ -22,6 +22,8 @@ class TeamPolicy
         if (auth()->check()) {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -67,6 +69,7 @@ class TeamPolicy
      */
     public function update(User $user, Team $team)
     {
+        return true;
         return $team->id === $user->team_id;
     }
 
