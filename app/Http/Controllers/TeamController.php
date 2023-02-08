@@ -51,10 +51,10 @@ class TeamController extends Controller
         }
 
         $team = auth()->user()->team;
-        $team->fill($validator->validated());
+        $team->fill($validator->validated())->save();
 
         return response()->json([
-            'team' => $team->$field
+            $field => $team[$field]
         ]);
     }
 
@@ -79,10 +79,10 @@ class TeamController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function getHero(int $hero_key): JsonResponse
+    public function getHero(string $field): JsonResponse
     {
         return response()->json([
-            'hero' => auth()->user()->team->$hero_key,
+            'hero' => auth()->user()->team[$field],
         ]);
     }
 }
