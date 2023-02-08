@@ -22,11 +22,15 @@ Route::post('auth/register', [AuthController::class, 'register']);
     
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'auth'
+    'prefix' => 'auth',
 ], function ($router) {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+});
 
-    Route::resource('/team', TeamController::class)->only('show', 'update', 'destroy');
+Route::group([
+    'middleware' => 'api',
+], function ($router) {
+    Route::resource('/team', TeamController::class)->only('index', 'update', 'destroy');
+    Route::post('/team/hero', [TeamController::class, 'getHero']);
 });

@@ -26,10 +26,10 @@ class TeamController extends Controller
      * @param  \App\Models\Team  $team
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Team $team): JsonResponse
+    public function index(): JsonResponse
     {
         return response()->json([
-            'team' => $team
+            'team' => auth()->user()->team,
         ]);
     }
 
@@ -40,23 +40,24 @@ class TeamController extends Controller
      * @param  \App\Models\Team  $team
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Team $team): JsonResponse
+    public function update(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name'        => 'sometimes|required|text',
             'description' => 'sometimes|required|text',
-            'hero_1'      => 'sometimes|required|numeric',
-            'hero_2'      => 'sometimes|required|numeric',
-            'hero_3'      => 'sometimes|required|numeric',
-            'hero_4'      => 'sometimes|required|numeric',
-            'hero_5'      => 'sometimes|required|numeric',
-            'hero_6'      => 'sometimes|required|numeric',
+            'heroe_1'      => 'sometimes|required|numeric',
+            'heroe_2'      => 'sometimes|required|numeric',
+            'heroe_3'      => 'sometimes|required|numeric',
+            'heroe_4'      => 'sometimes|required|numeric',
+            'heroe_5'      => 'sometimes|required|numeric',
+            'heroe_6'      => 'sometimes|required|numeric',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
+        $team = auth()->user()->team;
         $team->fill($validator->validated());
 
         return response()->json([
@@ -76,6 +77,19 @@ class TeamController extends Controller
 
         return response()->json([
             'team' => $team
+        ]);
+    }
+
+    /**
+     * Get hero
+     * 
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getHero(int $hero_key): JsonResponse
+    {
+        return response()->json([
+            'hero' => auth()->user()->team->$hero_key,
         ]);
     }
 }
