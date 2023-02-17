@@ -54,7 +54,7 @@ class TeamController extends Controller
         $team->fill($validator->validated())->save();
 
         return response()->json([
-            $field => $team[$field]
+            $field => $team[$field],
         ]);
     }
 
@@ -69,7 +69,7 @@ class TeamController extends Controller
         $team->emptyRows();
 
         return response()->json([
-            'team' => $team
+            'team' => $team,
         ]);
     }
 
@@ -83,6 +83,23 @@ class TeamController extends Controller
     {
         return response()->json([
             'hero' => auth()->user()->team[$field],
+        ]);
+    }
+
+    /**
+     * Delete hero
+     * 
+     * @param string $hero
+     * @return JsonResponse
+     */
+    public function deleteHero(string $hero): JsonResponse
+    {
+        $team = auth()->user()->team;
+        $team->$hero = null;
+        $team->save();
+
+        return response()->json([
+            'team' => $team,
         ]);
     }
 }

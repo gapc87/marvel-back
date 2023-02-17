@@ -38,6 +38,7 @@ Route::group([
 Route::group([
     'middleware' => 'api',
 ], function ($router) {
+    Route::delete('team/{hero}', [TeamController::class, 'deleteHero']);
     Route::resource('team', TeamController::class)->only('index', 'destroy');
     Route::get('team/{field}', [TeamController::class, 'getHero']);
     Route::put('team/{field}', [TeamController::class, 'update']);
